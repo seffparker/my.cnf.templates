@@ -1,0 +1,43 @@
+[mysqld]
+
+## Optimized for 12GB RAM
+## Version: 20191218
+ 
+# Innodb settings
+
+default_storage_engine = InnoDB
+innodb_file_per_table = 1
+innodb_flush_log_at_trx_commit = 1
+innodb_buffer_pool_size = 6G
+innodb_additional_mem_pool_size = 24M
+innodb_log_file_size = 128M
+innodb_buffer_pool_instances = 6
+innodb_thread_concurrency = 12
+innodb_flush_method = O_DIRECT
+innodb_io_capacity = 800 
+
+# Other vars
+
+performance_schema = 0
+thread_cache_size = 24
+myisam_sort_buffer_size = 64M
+max_allowed_packet = 192M
+tmp_table_size = 192M
+max_heap_table_size = 96M
+join_buffer_size = 4M
+max_connections = 1600
+max_user_connections = 96
+connect_timeout = 30
+net_read_timeout = 60
+net_write_timeout = 120
+wait_timeout = 300
+key_buffer_size = 128M
+query_cache_type = 1
+query_cache_size = 128M
+sort_buffer_size = 2M
+read_buffer_size = 2M
+read_rnd_buffer_size = 8M
+open_files_limit = 29558
+table_open_cache = 6000
+
+# end-of-template: define custom values below to override
