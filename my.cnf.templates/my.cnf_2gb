@@ -1,7 +1,7 @@
 [mysqld]
   
 ## Optimized for 2GB RAM
-## Version: 20191218
+## Version: 20200111
    
 # Innodb settings
   

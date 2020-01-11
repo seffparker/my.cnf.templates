@@ -2,17 +2,27 @@
 
 ## Script to apply the my.cnf template
 ## Author: Seff Parker
-## Version: 20191218
+## Version: 20200111
 
 TEMPLATE_DIR="/etc/my.cnf.templates"
 SYS_CNF="/etc/my.cnf"
+IGNORE_FLAG="/etc/my.cnf.templates.ignore"
+
+if [ -f $IGNORE_FLAG ]
+	then
+	echo "ERROR: This server is excluded by ${IGNORE_FLAG}"
+	echo "INFO: Template not applied"
+	exit 1
+fi
 
 SYS_RAM=$(free -g | awk '/^Mem/ {print $2+1}')
 SYS_RAM_ORIG=$SYS_RAM
 CNF_RAM=$(awk '/Optimized/ {print $4+0}' $SYS_CNF)
 CPU_CORE=$(grep -cw "^processor" /proc/cpuinfo)
 
-let IDB_BUFF="${SYS_RAM_ORIG} / 2"
+
+
+let IDB_BUFF="(${SYS_RAM_ORIG} + 1) / 3"
 let THREADS="${CPU_CORE} * 2"
 
 if [[ ! -d $TEMPLATE_DIR ]]
