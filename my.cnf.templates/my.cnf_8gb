@@ -1,15 +1,20 @@
+## Optimized for 8GB RAM
+## Version: 20200330
+ 
+[mysqld-5.6]
+innodb_additional_mem_pool_size = 20M
+
+[mysqld-5.7]
+innodb_temp_data_file_path = ibtmp1:12M:autoextend:max:1G
+
 [mysqld]
 
-## Optimized for 8GB RAM
-## Version: 20200111
- 
 # Innodb settings
 
 default_storage_engine = InnoDB
 innodb_file_per_table = 1
 innodb_flush_log_at_trx_commit = 1
 innodb_buffer_pool_size = 3G
-innodb_additional_mem_pool_size = 20M
 innodb_log_file_size = 96M
 innodb_buffer_pool_instances = 4
 innodb_thread_concurrency = 8
@@ -37,7 +42,7 @@ query_cache_size = 128M
 sort_buffer_size = 2M
 read_buffer_size = 2M
 read_rnd_buffer_size = 8M
-open_files_limit = 29558
+open_files_limit = 65535
 table_open_cache = 5000
 
 # end-of-template: define custom values below to override
