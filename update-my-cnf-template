@@ -2,7 +2,7 @@
 
 ## Script to apply the my.cnf template
 ## Author: Seff Parker
-## Version: 20200111
+## Version: 20200427
 
 TEMPLATE_DIR="/etc/my.cnf.templates"
 SYS_CNF="/etc/my.cnf"
@@ -12,7 +12,7 @@ if [ -f $IGNORE_FLAG ]
 	then
 	echo "ERROR: This server is excluded by ${IGNORE_FLAG}"
 	echo "INFO: Template not applied"
-	exit 1
+	exit 1 # failed, no action taken
 fi
 
 SYS_RAM=$(free -g | awk '/^Mem/ {print $2+1}')
@@ -48,7 +48,7 @@ TMPL_CNF="$TEMPLATE_DIR/my.cnf_${SYS_RAM}gb"
 if [[ ! -f $TMPL_CNF ]]
 	then
 	echo "ERROR: No matching templates found"
-	exit 1
+	exit 1 # failed, no action taken
 fi
 
 CNF_VERSION=$(awk '/Version/ {print $NF}' $SYS_CNF)
@@ -81,8 +81,10 @@ if [[ "$APPLY" ]]
 	cat $SYS_CNF.tmp >> $SYS_CNF
 	rm -f $SYS_CNF.tmp
 	echo "Please manually restart MySQL service to apply changes"
+	exit 2 # actions taken
 else
 	echo "INFO: Template not applied"
+	exit 0 # ok, no changes needed
 fi
 
 rm -f /etc/my.cnf_*gb
