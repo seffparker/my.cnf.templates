@@ -1,5 +1,5 @@
 ## Optimized for 28GB RAM
-## Version: 20200409
+## Version: 20200427
 
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 24M
@@ -20,14 +20,17 @@ innodb_log_file_size = 160M
 innodb_buffer_pool_instances = 14
 innodb_thread_concurrency = 28
 innodb_flush_method = O_DIRECT
-innodb_io_capacity = 800 
+innodb_flush_neighbors = 0
+innodb_io_capacity = 2000
+innodb_io_capacity_max = 4000
+innodb_checksum_algorithm = crc32
 
 # Other vars
 
 performance_schema = 0
 thread_cache_size = 32
 myisam_sort_buffer_size = 128M
-max_allowed_packet = 256M
+max_allowed_packet = 16M
 tmp_table_size = 256M
 max_heap_table_size = 128M
 join_buffer_size = 8M
