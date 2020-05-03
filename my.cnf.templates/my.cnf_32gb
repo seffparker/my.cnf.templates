@@ -1,5 +1,5 @@
 ## Optimized for 32GB RAM
-## Version: 20200427
+## Version: 20200503
 
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 24M
@@ -17,7 +17,7 @@ innodb_file_per_table = 1
 innodb_flush_log_at_trx_commit = 1
 innodb_buffer_pool_size = 10G
 innodb_log_file_size = 192M
-innodb_buffer_pool_instances = 16
+innodb_buffer_pool_instances = 10
 innodb_thread_concurrency = 32
 innodb_flush_method = O_DIRECT
 innodb_flush_neighbors = 0
@@ -30,7 +30,7 @@ innodb_checksum_algorithm = crc32
 performance_schema = 0
 thread_cache_size = 32
 myisam_sort_buffer_size = 128M
-max_allowed_packet = 16M
+max_allowed_packet = 16777216
 tmp_table_size = 256M
 max_heap_table_size = 128M
 join_buffer_size = 8M

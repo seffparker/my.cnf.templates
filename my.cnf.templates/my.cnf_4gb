@@ -1,11 +1,11 @@
 ## Optimized for 4GB RAM
-## Version: 20200427
+## Version: 20200503
  
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 16M
 
 [mysqld-5.7]
-innodb_temp_data_file_path = ibtmp1:12M:autoextend:max:512M
+innodb_temp_data_file_path = ibtmp1:12M:autoextend:max:1G
 sql_mode = "STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
 
 [mysqld]
@@ -17,7 +17,7 @@ innodb_file_per_table = 1
 innodb_flush_log_at_trx_commit = 1
 innodb_buffer_pool_size = 1G
 innodb_log_file_size = 64M
-innodb_buffer_pool_instances = 2
+innodb_buffer_pool_instances = 1
 innodb_thread_concurrency = 4
 innodb_flush_method = O_DIRECT
 innodb_flush_neighbors = 0
@@ -30,7 +30,7 @@ innodb_checksum_algorithm = crc32
 performance_schema = 0
 thread_cache_size = 16
 myisam_sort_buffer_size = 64M
-max_allowed_packet = 16M
+max_allowed_packet = 16777216
 tmp_table_size = 128M
 max_heap_table_size = 64M
 join_buffer_size = 1M
