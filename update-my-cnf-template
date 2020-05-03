@@ -2,17 +2,17 @@
 
 ## Script to apply the my.cnf template
 ## Author: Seff Parker
-## Version: 20200427
+## Version: 20200305
 
 TEMPLATE_DIR="/etc/my.cnf.templates"
 SYS_CNF="/etc/my.cnf"
 IGNORE_FLAG="/etc/my.cnf.templates.ignore"
 
 if [ -f $IGNORE_FLAG ]
-	then
-	echo "ERROR: This server is excluded by ${IGNORE_FLAG}"
-	echo "INFO: Template not applied"
-	exit 1 # failed, no action taken
+        then
+        echo "ERROR: This server is excluded by ${IGNORE_FLAG}"
+        echo "INFO: Template not applied"
+        exit 1 # skipped, no action taken
 fi
 
 SYS_RAM=$(free -g | awk '/^Mem/ {print $2+1}')
@@ -20,14 +20,14 @@ SYS_RAM_ORIG=$SYS_RAM
 CNF_RAM=$(awk '/Optimized/ {print $4+0}' $SYS_CNF)
 CPU_CORE=$(grep -cw "^processor" /proc/cpuinfo)
 
-
+TWEAK=true # forces fine-tunings
 
 let IDB_BUFF="(${SYS_RAM_ORIG} + 1) / 3"
 let THREADS="${CPU_CORE} * 2"
 
 if [[ ! -d $TEMPLATE_DIR ]]
-	then
-	TEMPLATE_DIR="${PWD}/my.cnf.templates"
+        then
+        TEMPLATE_DIR="${PWD}/my.cnf.templates"
 fi
 
 echo "INFO: Template directory set to $TEMPLATE_DIR"
@@ -35,20 +35,20 @@ echo "INFO: Template directory set to $TEMPLATE_DIR"
 TMPL_CNF="$TEMPLATE_DIR/my.cnf_${SYS_RAM}gb"
 
 if [[ ! -f $TMPL_CNF ]]
-	then
-	echo "WARNING: Predefined template for $SYS_RAM_ORIG GB RAM not found. Checking similar templates..."
-	GB_LIST=$(ls -1 $TEMPLATE_DIR/my.cnf_* | grep -Po "\d+")
-	SYS_RAM=$(echo -e "${GB_LIST}\n${SYS_RAM_ORIG}" | sort -n | grep -B1 ${SYS_RAM_ORIG} | head -1)
-	echo "INFO: Proceeding with $SYS_RAM RAM template"
-	TWEAK=true
+        then
+        echo "WARNING: Predefined template for $SYS_RAM_ORIG GB RAM not found. Checking similar templates..."
+        GB_LIST=$(ls -1 $TEMPLATE_DIR/my.cnf_* | grep -Po "\d+")
+        SYS_RAM=$(echo -e "${GB_LIST}\n${SYS_RAM_ORIG}" | sort -n | grep -B1 ${SYS_RAM_ORIG} | head -1)
+        echo "INFO: Proceeding with $SYS_RAM RAM template"
+        TWEAK=true
 fi
 
 TMPL_CNF="$TEMPLATE_DIR/my.cnf_${SYS_RAM}gb"
 
 if [[ ! -f $TMPL_CNF ]]
-	then
-	echo "ERROR: No matching templates found"
-	exit 1 # failed, no action taken
+        then
+        echo "ERROR: No matching templates found"
+        exit 1 # failed, no action taken
 fi
 
 CNF_VERSION=$(awk '/Version/ {print $NF}' $SYS_CNF)
@@ -56,36 +56,33 @@ TMPL_VERSION=$(awk '/Version/ {print $NF}' $TMPL_CNF)
 
 echo "DEBUG: CNF_VERSION=$CNF_VERSION, TMPL_VERSION=$TMPL_VERSION, SYS_RAM=$SYS_RAM, CNF_RAM=$CNF_RAM"
 if [[ "$SYS_RAM_ORIG" != "$CNF_RAM" || "$CNF_VERSION" != "$TMPL_VERSION" || "$1" == "-f" ]]
-	then
-	echo "WARNING: Template needs update"
-	APPLY=true
+        then
+        echo "WARNING: Template needs update"
+        APPLY=true
 else
-	echo "INFO: Template is up-to-date"
+        echo "INFO: Template is up-to-date"
 fi
 
 if [[ "$APPLY" ]]
-	then
-	cp -vf $SYS_CNF ${SYS_CNF}.previous
-	sed -i '0,/end-of-template/d' $SYS_CNF
-	mv -f $SYS_CNF $SYS_CNF.tmp
-	cp -vf $TMPL_CNF $SYS_CNF
-	if [[ "$TWEAK" == "true" ]]
-		then
-		echo "Fine-tuning some variables matching with ${SYS_RAM_ORIG} GB RAM and ${CPU_CORE} CPU cores"
-		sed -i "s/Optimized.*/Optimized for ${SYS_RAM_ORIG} RAM/g" $SYS_CNF
-		sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = ${IDB_BUFF}G/g" $SYS_CNF
-		sed -i "s/innodb_buffer_pool_instances.*/innodb_buffer_pool_instances = ${IDB_BUFF}/g" $SYS_CNF
-		sed -i "s/innodb_thread_concurrency.*/innodb_thread_concurrency = ${THREADS}/g" $SYS_CNF
-	fi
-	echo "Retaining custom values"
-	cat $SYS_CNF.tmp >> $SYS_CNF
-	rm -f $SYS_CNF.tmp
-	echo "Please manually restart MySQL service to apply changes"
-	exit 2 # actions taken
+        then
+        cp -vf $SYS_CNF ${SYS_CNF}.previous
+        sed -i '0,/end-of-template/d' $SYS_CNF
+        mv -f $SYS_CNF $SYS_CNF.tmp
+        cp -vf $TMPL_CNF $SYS_CNF
+        if [[ "$TWEAK" == "true" ]]
+                then
+                echo "Fine-tuning some variables matching with ${SYS_RAM_ORIG} GB RAM and ${CPU_CORE} CPU cores"
+                sed -i "s/Optimized.*/Optimized for ${SYS_RAM_ORIG} RAM/g" $SYS_CNF
+                sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = ${IDB_BUFF}G/g" $SYS_CNF
+                sed -i "s/innodb_buffer_pool_instances.*/innodb_buffer_pool_instances = ${IDB_BUFF}/g" $SYS_CNF
+                sed -i "s/innodb_thread_concurrency.*/innodb_thread_concurrency = ${THREADS}/g" $SYS_CNF
+        fi
+        echo "Retaining custom values"
+        cat $SYS_CNF.tmp >> $SYS_CNF
+        rm -f $SYS_CNF.tmp
+        echo "Please manually restart MySQL service to apply changes"
+        exit 2 # actions taken
 else
-	echo "INFO: Template not applied"
-	exit 0 # ok, no changes needed
+        echo "INFO: Template not applied"
+        exit 0 # ok, no changes needed
 fi
-
-rm -f /etc/my.cnf_*gb
-
