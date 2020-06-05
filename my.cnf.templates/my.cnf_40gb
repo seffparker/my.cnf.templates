@@ -1,5 +1,5 @@
-## Optimized for 40GB RAM
-## Version: 20200601-1
+## Optimized for 40 G RAM
+## Version: 20200606
 
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 24M
@@ -31,7 +31,7 @@ innodb_checksum_algorithm = crc32
 performance_schema = 0
 thread_cache_size = 32
 myisam_sort_buffer_size = 128M
-max_allowed_packet = 16777216
+max_allowed_packet = 268435456
 tmp_table_size = 256M
 max_heap_table_size = 128M
 join_buffer_size = 8M
@@ -43,7 +43,7 @@ net_write_timeout = 120
 wait_timeout = 300
 key_buffer_size = 128M
 query_cache_type = 1
-query_cache_size = 52M
+query_cache_size = 66M
 query_cache_limit = 128K
 query_cache_min_res_unit = 1K
 sort_buffer_size = 2M
