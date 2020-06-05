@@ -72,7 +72,7 @@ if [[ "$APPLY" ]]
         if [[ "$TWEAK" == "true" ]]
                 then
                 echo "Fine-tuning some variables matching with ${SYS_RAM_ORIG} GB RAM and ${CPU_CORE} CPU cores"
-                sed -i "s/Optimized.*/Optimized for ${SYS_RAM_ORIG} RAM/g" $SYS_CNF
+                sed -i "s/Optimized.*/Optimized for ${SYS_RAM_ORIG}GB RAM/g" $SYS_CNF
                 sed -i "s/innodb_buffer_pool_size.*/innodb_buffer_pool_size = ${IDB_BUFF}G/g" $SYS_CNF
                 sed -i "s/innodb_buffer_pool_instances.*/innodb_buffer_pool_instances = ${IDB_BUFF}/g" $SYS_CNF
                 sed -i "s/innodb_thread_concurrency.*/innodb_thread_concurrency = ${THREADS}/g" $SYS_CNF
