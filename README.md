@@ -5,11 +5,4 @@ The templates includes configurations for standard RAM sizes from 1 GB to 48 GB.
 
 
 ### Note for systemd
-Some limits cannot be applied using `my.cnf` only. We may need to specify an upper limit via `/etc/systemd/system/mysqld.service.d/systemd-limits.conf`:
-```
-[Service]
-LimitNOFILE=65535
-LimitMEMLOCK=infinity
-```
-and run `/bin/systemctl daemon-reload` to load our custom limits.
-
+Some MySQL limits cannot be applied using `my.cnf` only. We may need to specify an upper limit via `/etc/systemd/system/mysqld.service.d/systemd-limits.conf` and run `/bin/systemctl daemon-reload` to load our custom limits.
