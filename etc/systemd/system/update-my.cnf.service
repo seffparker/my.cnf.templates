@@ -1,0 +1,11 @@
+[Unit]
+Description=Apply my.cnf template if needed
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/update-my-cnf-template &> /var/log/update-my-cnf-template.log
+TimeoutStartSec=0
+
+[Install]
+WantedBy=default.target

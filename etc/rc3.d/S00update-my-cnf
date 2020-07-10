@@ -1,0 +1,10 @@
+#!/bin/bash
+
+## /etc/rc3.d/S00update-my-cnf
+## Simple script to run update-my-cnf-template at early boot to re-apply my.cnf if needed
+##
+## Author: Seff Parker
+## Version: 20191213
+
+
+/usr/local/bin/update-my-cnf-template &> /var/log/update-my-cnf-template.log
