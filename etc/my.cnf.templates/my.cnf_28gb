@@ -1,5 +1,5 @@
 ## Optimized for 28GB RAM
-## Version: 20200629
+## Version: 20200724
 
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 24M
@@ -43,13 +43,13 @@ net_write_timeout = 120
 wait_timeout = 300
 key_buffer_size = 128M
 query_cache_type = 1
-query_cache_size = 56M
-query_cache_limit = 128K
+query_cache_size = 14M
+query_cache_limit = 32K
 query_cache_min_res_unit = 1K
 sort_buffer_size = 2M
 read_buffer_size = 2M
 read_rnd_buffer_size = 8M
-open_files_limit = 65535
+open_files_limit = 80000
 table_open_cache = 10000
 
 # end-of-template: define custom values below to override
