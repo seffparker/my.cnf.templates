@@ -1,5 +1,5 @@
 ## Optimized for 12GB RAM
-## Version: 20200724
+## Version: 20200724-1
  
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 24M
