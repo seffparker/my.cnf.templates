@@ -1,5 +1,5 @@
 ## Optimized for 1GB RAM
-## Version: 20200724-1
+## Version: 20200724-2
  
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 8M
@@ -43,7 +43,7 @@ net_write_timeout = 120
 wait_timeout = 300
 key_buffer_size = 32M
 query_cache_type = 1
-query_cache_size = 1M
+query_cache_size = 4M
 query_cache_limit = 32K
 query_cache_min_res_unit = 1K
 sort_buffer_size = 2M
