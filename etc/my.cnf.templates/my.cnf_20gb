@@ -1,5 +1,5 @@
 ## Optimized for 20GB RAM
-## Version: 20200724-2
+## Version: 20200730
 
 [mysqld-5.6]
 innodb_additional_mem_pool_size = 24M
@@ -34,7 +34,6 @@ myisam_sort_buffer_size = 128M
 max_allowed_packet = 268435456
 tmp_table_size = 32M
 max_heap_table_size = 32M
-join_buffer_size = 8M
 max_connections = 2400
 max_user_connections = 160
 connect_timeout = 30
@@ -46,9 +45,6 @@ query_cache_type = 1
 query_cache_size = 32M
 query_cache_limit = 32K
 query_cache_min_res_unit = 1K
-sort_buffer_size = 2M
-read_buffer_size = 2M
-read_rnd_buffer_size = 8M
 open_files_limit = 80000
 table_open_cache = 8000
 
